@@ -1,0 +1,38 @@
+{
+  "name": "nautilux",
+  "version": "1.0.0",
+  "description": "An open-source developer intelligence API for service availability monitoring, incident tracking, and security vulnerability alerts.",
+  "license": "MIT",
+  "author": "Gustavo Hortega",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.5",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.12.3",
+    "node-cron": "^4.6.0",
+    "resend": "^6.39.0",
+    "swagger-jsdoc": "^6.3.0",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.19.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "eslint": "^10.15.0",
+    "globals": "^17.14.0",
+    "jest": "^30.5.2",
+    "nodemon": "^3.1.14",
+    "supertest": "^7.3.2"
+  }
+}
