@@ -43,7 +43,7 @@ const loginUser = async (email, password) => {
 		throw new Error('Email and password is required.');
 	}
 
-	const user = await User.findOne({ email: email});
+	const user = await User.findOne({ email: email}).select('password');
 
 	const validPassword = await bcrypt.compare(password, user.password);
 

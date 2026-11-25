@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const { User } = require('../../models');
 
 const { createUser, loginUser } = require('../../services');
+const { authenticate } = require('../../middlewares/authentication');
 
 const router = express.Router();
 
@@ -43,6 +44,24 @@ router.post('/login', async (req, res) => { // User login route
 			sucesso: false,
 			error: error.message
 		});
+	}
+});
+
+router.get('/me', authenticate, async (req, res) => { // User info route
+	try {
+		const user = await User.findOne({_id: req.user.userId});
+	
+		res.json({
+			success: true,
+			user: user
+		});
+
+	} catch (error) {
+		res.json({
+			success: false,
+			error: error.message
+		})
+
 	}
 });
 
