@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const { generateToken } = require('../auth');
 
 const { User } = require('../models');
 
@@ -36,4 +37,30 @@ const createUser = async (user) => {
 	return savedUser;
 };
 
-module.exports = createUser;
+
+const loginUser = async (email, password) => {
+	if (!email || !password) {
+		throw new Error('Email and password is required.');
+	}
+
+	const user = await User.findOne({ email: email});
+
+	const validPassword = await bcrypt.compare(password, user.password);
+
+
+	if(!user || !validPassword) {
+		throw new Error('User not found, please verify email adress.');
+	}
+
+	if(validPassword) {
+		return generateToken({ userId: user._id });
+	}
+
+
+};
+
+module.exports = {
+	createUser,
+	loginUser,
+
+};
