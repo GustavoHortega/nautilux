@@ -20,7 +20,7 @@ const checkServiceStatus = async (service) => {
 		category: responseData.category,
 		current_status: responseData.current_status,
 		last_checked: responseData.last_checked
-	}
+	};
 
 	return serviceInfo;
 
@@ -28,4 +28,4 @@ const checkServiceStatus = async (service) => {
 
 module.exports = {
 	checkServiceStatus,
-}
+};

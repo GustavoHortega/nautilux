@@ -1,5 +1,4 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 
 const { User } = require('../../models');
 
@@ -31,7 +30,7 @@ router.post('/create', async (req, res) => { // User creation route
 
 router.post('/login', async (req, res) => { // User login route
 	try {
-		loginData = req.body
+		const loginData = req.body;
 		const token = await loginUser(loginData.email, loginData.password);
 
 		res.json({
@@ -60,7 +59,7 @@ router.get('/me', authenticate, async (req, res) => { // User info route
 		res.json({
 			success: false,
 			error: error.message
-		})
+		});
 
 	}
 });
