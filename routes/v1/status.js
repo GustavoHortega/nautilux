@@ -4,14 +4,14 @@ const  { checkServiceStatus } = require('../../services');
 
 const router = express.Router();
 
-router.get('/nautilux', (req, res) => {
+router.get('/nautilux', (req, res) => { // Nautilux health ckeck
 	res.json({
 	    success: true,
 	    message: 'Nautilux is on!'
 	});
 });
 
-router.get('/:service', async (req, res) => {
+router.get('/:service', async (req, res) => { // External service health check
 	const service = req.params.service;
 
 	try {
