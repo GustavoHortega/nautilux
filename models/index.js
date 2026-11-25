@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const { logger } = require('../utils');
 
+// Schema import
+const userSchema = require('./user');
+
+// Models
+const User = mongoose.model('User', userSchema);
+
 const connectDb = async (retries = 5, delay = 5000) => {
 	while (retries > 0) {
 		try {
@@ -24,5 +30,6 @@ const connectDb = async (retries = 5, delay = 5000) => {
 
 module.exports = {
 	connectDb,
+	User,
 
 };
