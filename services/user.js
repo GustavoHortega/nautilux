@@ -32,7 +32,8 @@ const createUser = async (user) => {
 	const hashedPassword = await bcrypt.hash(user.password, 10);
 	user.password = hashedPassword;
 
-	const { password, ...savedUser } = (await User.create(user))._doc;
+	const savedUser = (await User.create(user)).toObject();
+	delete savedUser.password;
 
 	return savedUser;
 };
