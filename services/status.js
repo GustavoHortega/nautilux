@@ -3,12 +3,15 @@ const checkServiceStatus = async (service) => {
 	const response = await fetch(`https://apistatus.watch/api/status/public/${service}`);
 
 	if (!response.ok) {
-		if (response.status == 404) {
-			throw new Error('API not found, please verify service name.');
+		if (response.status === 404) {
+			throw Object.assign(new Error('API not found, please verify service name.'), {
+				statusCode: 404
+			});
 
 		} else {
-			throw new Error('External response error, please try later.');
-
+			throw Object.assign(new Error('External response error, please try later.'), {
+				statusCode: 502
+			});
 		}
 	}
 

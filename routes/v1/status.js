@@ -23,7 +23,7 @@ router.get('/:service', async (req, res) => { // External service health check
 		});
 
 	} catch (error) {
-		res.status(500).json({
+		res.status(error.statusCode || 500).json({
 			success: false,
 			error: error.message
 		});
