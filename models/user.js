@@ -1,5 +1,20 @@
 const { Schema } = require('mongoose');
 
+const TechnologiesSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    ecosystem: {
+        type: String,
+        required: true
+    },
+    version: {
+        type: String,
+        required: true
+    }
+}, { _id: true });
+
 const UserSchema = new Schema({
 	nickname: {
 		type: String,
@@ -25,7 +40,8 @@ const UserSchema = new Schema({
 		type: String,
 		required: true,
 		select: false
-	}
+	},
+	technologies: [TechnologiesSchema]
 });
 
 module.exports = UserSchema;

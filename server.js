@@ -2,7 +2,7 @@
 // Imports
 const { connectDb } = require('./models');
 const { logger } = require('./utils');
-const { syncVulnerabilities } = require('./workers/vulnerability');
+const { startScheduler } = require('./workers/scheduler');
 
 // Dotenv Config
 require('dotenv').config({ quiet: true });
@@ -22,6 +22,9 @@ const startServer = async () => {
 		app.listen(port, () => {
 			logger.info(`Server listening on port ${port}`);
 		});
+
+		// Start scheduler
+		startScheduler();
 
 	} catch (error) {
 		logger.error(`Application startup error: ${error.message}`);

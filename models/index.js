@@ -4,10 +4,12 @@ const { logger } = require('../utils');
 // Schema import
 const UserSchema = require('./user');
 const VulnerabilitySchema = require('./vulnerability');
+const NotificationSchema = require('./notification');
 
 // Models
 const User = mongoose.model('User', UserSchema);
 const Vulnerability = mongoose.model('Vulnerability', VulnerabilitySchema);
+const Notification = mongoose.model('Notificantion', NotificationSchema);
 
 const connectDb = async (retries = 5, delay = 5000) => {
 	while (retries > 0) {
@@ -34,5 +36,6 @@ module.exports = {
 	connectDb,
 	User,
 	Vulnerability,
+	Notification,
 
 };
