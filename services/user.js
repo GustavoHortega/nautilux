@@ -38,30 +38,112 @@ const createUser = async (user) => {
 	return savedUser;
 };
 
-
 const loginUser = async (email, password) => {
 	if (!email || !password) {
 		throw new Error('Email and password is required.');
 	}
 
-	const user = await User.findOne({ email: email}).select('password');
+	const user = await User.findOne({ email: email }).select('password');
 
 	const validPassword = await bcrypt.compare(password, user.password);
 
 
-	if(!user || !validPassword) {
+	if (!user || !validPassword) {
 		throw new Error('User not found, please verify email adress.');
 	}
 
-	if(validPassword) {
+	if (validPassword) {
 		return generateToken({ userId: user._id });
 	}
 
 
 };
 
+const addTechnology = async (userId, technology) => {
+	try {
+		const user = await User.findById(userId);
+
+		if (!user) {
+			throw new Error('User not found.')
+		}
+
+		const exists = user.technologies.some(tech =>
+			tech.name === technology.name &&
+			tech.ecosystem === technology.ecosystem
+		);
+
+		if (exists) {
+			const error = new Error('This technology is already saved.');
+			error.statusCode = 409;
+			throw error;
+		}
+
+		user.technologies.push(technology);
+
+		await user.save();
+
+		return user.technologies[user.technologies.length - 1];
+
+	} catch (error) {
+		throw error
+	}
+}
+
+const updateTechnology = async (userId, technologyId, updates) => {
+	const user = await User.findById(userId);
+
+	if (!user) {
+		throw new Error('User not found.');
+	}
+
+	const technology = user.technologies.id(technologyId);
+
+	if (!technology) {
+		const error = new Error('Technology not found.');
+		error.statusCode = 404;
+		throw error;
+	}
+
+	const allowedFields = ['name', 'ecosystem', 'version'];
+
+	for (const field of allowedFields) {
+		if (updates[field] !== undefined) {
+			technology[field] = updates[field];
+		}
+	}
+
+	await user.save();
+
+	return technology;
+};
+
+const deleteTechnology = async (userId, technologyId) => {
+	const user = await User.findById(userId);
+
+	if (!user) {
+		throw new Error('User not found.');
+	}
+
+	const technology = user.technologies.id(technologyId);
+
+	if (!technology) {
+		const error = new Error('Technology not found.');
+		error.statusCode = 404;
+		throw error;
+	}
+
+	technology.deleteOne();
+
+	await user.save();
+
+	return technology;
+};
+
 module.exports = {
 	createUser,
 	loginUser,
+	addTechnology,
+	updateTechnology,
+	deleteTechnology,
 
 };
