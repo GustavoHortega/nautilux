@@ -1,11 +1,13 @@
 
+// Dotenv Config
+require('dotenv').config({ quiet: true });
+
 // Imports
 const { connectDb } = require('./models');
 const { logger } = require('./utils');
 const { startScheduler } = require('./workers/scheduler');
-
-// Dotenv Config
-require('dotenv').config({ quiet: true });
+const { syncNotifications } = require('./workers/notification');
+const { syncVulnerabilities } = require('./workers/vulnerability');
 
 const app = require('./app');
 
@@ -25,6 +27,10 @@ const startServer = async () => {
 
 		// Start scheduler
 		startScheduler();
+
+		// Start services
+		await syncVulnerabilities();
+		await syncNotifications();
 
 	} catch (error) {
 		logger.error(`Application startup error: ${error.message}`);

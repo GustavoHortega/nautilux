@@ -40,27 +40,34 @@ router.post('/login', async (req, res) => { // User login route
 
 	} catch (error) {
 		res.status(401).json({
-			sucesso: false,
+			success: false,
 			error: error.message
 		});
 	}
 });
 
-router.get('/me', authenticate, async (req, res) => { // User info route
+router.get('/me', authenticate, async (req, res) => {
 	try {
-		const user = await User.findOne({ _id: req.user.userId });
+		const user = await User.findById(req.user.userId)
+			.select('-password');
+
+		if (!user) {
+			return res.status(404).json({
+				success: false,
+				error: 'User not found.'
+			});
+		}
 
 		res.json({
 			success: true,
-			user: user
+			user
 		});
 
 	} catch (error) {
-		res.json({
+		res.status(500).json({
 			success: false,
 			error: error.message
 		});
-
 	}
 });
 

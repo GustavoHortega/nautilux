@@ -3,7 +3,7 @@ const { checkVulnerability } = require('../../services');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
 	const payload = req.body;
 
 	try {
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 
 	} catch (error) {
 		res.status(error.statusCode || 500).json({
-			success: true,
+			success: false,
 			error: error.message
 		});
 	}
