@@ -1,0 +1,21 @@
+info:
+  name: DELETE_USER_TECHNOLOGY
+  type: http
+  seq: 8
+
+http:
+  method: DELETE
+  url: http://localhost:3000/v1/users/me/technologies/6b09b0745a45964ab322da6a
+  body:
+    type: json
+    data: ""
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YjA2MjM3YmYxMzEwNGIzZDhiYWMxM2UiLCJpYXQiOjE3OTU3OTcwODcsImV4cCI6MTc5NTgwMDY4N30.YJiairONEkKJrXjfEMokj7RpgNOpiVH37eEf3iwXF-4
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

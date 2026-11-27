@@ -1,0 +1,23 @@
+info:
+  name: LOGIN_USER
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost:3000/v1/users/login
+  body:
+    type: json
+    data: |-
+      {
+        "email": "nautilux@test.com",
+        "password": "Thisisatest1@"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
