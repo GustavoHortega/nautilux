@@ -40,23 +40,22 @@ const createUser = async (user) => {
 
 const loginUser = async (email, password) => {
 	if (!email || !password) {
-		throw new Error('Email and password is required.');
+		throw new Error('Email and password are required.');
 	}
 
-	const user = await User.findOne({ email: email }).select('password');
+	const user = await User.findOne({ email }).select('+password');
+
+	if (!user) {
+		throw new Error('Invalid email or password.');
+	}
 
 	const validPassword = await bcrypt.compare(password, user.password);
 
-
-	if (!user || !validPassword) {
-		throw new Error('User not found, please verify email adress.');
+	if (!validPassword) {
+		throw new Error('Invalid email or password.');
 	}
 
-	if (validPassword) {
-		return generateToken({ userId: user._id });
-	}
-
-
+	return generateToken({ userId: user._id });
 };
 
 const addTechnology = async (userId, technology) => {
