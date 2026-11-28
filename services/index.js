@@ -1,5 +1,3 @@
-const { addTechnology } = require('./user');
-
 module.exports ={
 	createUser: require('./user').createUser,
 	loginUser: require('./user').loginUser,
@@ -9,4 +7,9 @@ module.exports ={
 	checkServiceStatus: require('./status').checkServiceStatus,
 	checkVulnerability: require('./vulnerability').checkVulnerability,
 	createVulnerability: require('./vulnerability').createVulnerability,
+	matchUserVulnerabilities: require('./vulnerabilityMatcher').isVersionAffected,
+	isVersionAffected: require('./vulnerabilityMatcher').isVersionAffected,
+	findPendingNotifications: require('./notificationMatcher').findPendingNotifications,
+	sendPendingNotifications:require('./notificationSender').sendPendingNotifications,
+	
 };
